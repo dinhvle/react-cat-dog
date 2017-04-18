@@ -14,24 +14,35 @@ var btnStyle = {
   marginRight: '5px'
 };
 
-class CatComponent extends React.Component {
+class PetComponent extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      likesCount: 0
+    };
     this.handleDislikeBtnClick = this.handleDislikeBtnClick.bind(this);
     this.handleLikeBtnClick = this.handleLikeBtnClick.bind(this);
   }
   handleLikeBtnClick() {
-    console.log(this.props.petName + ' Component like button clicked')
+    this.setState(function(prevState) {
+      return {
+        likesCount: prevState.likesCount + 1
+      }
+    });
   }
-
   handleDislikeBtnClick() {
-    console.log(this.props.petName + ' Component dislike button clicked')
+    this.setState(function(prevState) {
+      return {
+        likesCount: prevState.likesCount - 1
+      }
+    });
   }
 
   render() {
+    console.log('Inside render method: ', this.state.likesCount);
     return (
       <div style={comStyle}>
-        <h3>{this.props.petName} Component</h3>
+        <h3>{this.props.petName} Likes: {this.state.likesCount}</h3>
         <img style={{height: 400, width:400}} src={this.props.petImageUrl} alt={"Cute " + this.props.petName}/>
         <br />
         <button style={btnStyle} onClick={this.handleLikeBtnClick}>Like</button>
@@ -41,4 +52,4 @@ class CatComponent extends React.Component {
   }
 }
 
-module.exports = CatComponent;
+module.exports = PetComponent;
